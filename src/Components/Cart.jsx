@@ -22,7 +22,6 @@ class Cart extends React.Component {
 
   totalCart() {
     const { card } = this.props;
-    console.log(card);
     let total = 0;
     card.forEach((item) => {
       total += (item.price * item.quantity);
@@ -39,7 +38,7 @@ class Cart extends React.Component {
   }
 
   render() {
-    const { card, increase, decrease } = this.props;
+    const { card, increase, decrease, sideBar, alertComponent } = this.props;
     return (
       <div className="cart">
         <header className="header-cart">
@@ -61,13 +60,20 @@ class Cart extends React.Component {
                 </h1>
               )
           }
-          <Link
-            to="/"
-          >
-            <span role="img" aria-label="home">
-              <AiOutlineHome className="fs-2 text-success m-2" />
-            </span>
-          </Link>
+          {
+            sideBar
+              ? false
+              : (
+                <Link
+                  to="/"
+                >
+                  <span role="img" aria-label="home">
+                    <AiOutlineHome className="fs-2 text-success m-2" />
+                  </span>
+                </Link>
+              )
+          }
+
         </header>
         <main>
           {
@@ -101,15 +107,34 @@ class Cart extends React.Component {
                     {quantity}
 
                   </p>
-                  <button
-                    onClick={ increase }
-                    type="button"
-                    data-testid="product-increase-quantity"
-                    className="btn btn-outline-info px-4"
-                    id={ id }
-                  >
-                    <AiOutlinePlus id={ id } />
-                  </button>
+                  {
+                    alertComponent
+                      ? (
+                        <button
+                          data-bs-target="#exampleModal"
+                          data-bs-toggle="modal"
+                          onClick={ increase }
+                          type="button"
+                          data-testid="product-increase-quantity"
+                          className="btn btn-outline-info px-4"
+                          id={ id }
+                        >
+                          <AiOutlinePlus id={ id } />
+                        </button>
+                      )
+                      : (
+                        <button
+                          onClick={ increase }
+                          type="button"
+                          data-testid="product-increase-quantity"
+                          className="btn btn-outline-info px-4"
+                          id={ id }
+                        >
+                          <AiOutlinePlus id={ id } />
+                        </button>
+                      )
+
+                  }
                 </div>
                 <button
                   onClick={ (e) => this.hadlerClick(e, id) }
@@ -150,4 +175,6 @@ Cart.propTypes = {
   increase: PropTypes.func.isRequired,
   decrease: PropTypes.func.isRequired,
   del: PropTypes.func.isRequired,
+  sideBar: PropTypes.bool.isRequired,
+  alertComponent: PropTypes.bool.isRequired,
 };

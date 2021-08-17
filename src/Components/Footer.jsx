@@ -37,10 +37,10 @@ class Footer extends Component {
             <BiRocket className="m-2 text-success" />
           </h2>
           <nav>
-            <a href={ devSelect.gitHub } target="_blank" rel="noreferrer">
+            <a href={ devSelect.gitHub } target="_blank" rel="noopener noreferrer">
               <AiFillGithub className="fs-1 text-success m-5 text-center" />
             </a>
-            <a href={ devSelect.linkedin } target="_blank" rel="noreferrer">
+            <a href={ devSelect.linkedin } target="_blank" rel="noopener noreferrer">
               <AiFillLinkedin className="fs-1 text-success m-5 text-center" />
             </a>
           </nav>

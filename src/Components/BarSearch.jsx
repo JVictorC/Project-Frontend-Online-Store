@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
+import CarNew from './SideCart';
 
 class BarSearch extends Component {
   constructor(props) {
@@ -30,11 +29,11 @@ class BarSearch extends Component {
 
   render() {
     const { searchText } = this.state;
-    const { QuantityItemCard } = this.props;
+    const { QuantityItemCard, increase, decrease, del, alertComponent } = this.props;
 
     return (
       <header className="barsearch">
-        <p data-testid="home-initial-message" className="lead">
+        <p data-testid="home-initial-message" className="lead fs-6">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <form onSubmit={ this.handleSubmit } className="form-search">
@@ -55,19 +54,21 @@ class BarSearch extends Component {
             <BsSearch />
           </button>
         </form>
-        <Link
-          data-testid="shopping-cart-button"
-          to="cart/"
-          className="Link-Cart "
-        >
+        <div>
           <p
             data-testid="shopping-cart-size"
-            className="text-success fs-1 teste"
+            className="text-success fs-3"
           >
             {QuantityItemCard}
           </p>
-          <AiOutlineShoppingCart className="text-success fs-1" />
-        </Link>
+          <CarNew
+            increase={ increase }
+            decrease={ decrease }
+            del={ del }
+            QuantityItemCard={ QuantityItemCard }
+            alertComponent={ alertComponent }
+          />
+        </div>
       </header>
     );
   }
@@ -76,6 +77,10 @@ class BarSearch extends Component {
 BarSearch.propTypes = {
   getProducts: PropTypes.func.isRequired,
   QuantityItemCard: PropTypes.number.isRequired,
+  increase: PropTypes.func.isRequired,
+  decrease: PropTypes.func.isRequired,
+  del: PropTypes.func.isRequired,
+  alertComponent: PropTypes.bool.isRequired,
 };
 
 export default BarSearch;

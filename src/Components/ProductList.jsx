@@ -9,10 +9,12 @@ export default class ProductList extends Component {
   }
 
   getDetailsProduct(product) {
-    const { thumbnail, price, title, shipping } = product;
+    const {
+      thumbnail, price, title, shipping, id, available_quantity: availableQtd,
+    } = product;
     const { free_shipping: freeshipping } = shipping;
     localStorage.setItem('productDetail',
-      JSON.stringify({ thumbnail, price, title, freeshipping }));
+      JSON.stringify({ thumbnail, price, title, freeshipping, id, availableQtd }));
   }
 
   hadlerClick(product) {

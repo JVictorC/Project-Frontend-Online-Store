@@ -71,12 +71,17 @@ class Home extends Component {
 
   render() {
     const { products, card, loading } = this.state;
-    const { QuantityItemCard } = this.props;
+
+    const { QuantityItemCard, increase, decrease, del, alertComponent } = this.props;
     return (
       <div className="grid-container">
         <BarSearch
           getProducts={ this.getProducts }
           QuantityItemCard={ QuantityItemCard }
+          increase={ increase }
+          decrease={ decrease }
+          del={ del }
+          alertComponent={ alertComponent }
         />
         <main className="Product-Show">
           <Category handleClick={ this.handleClick } />
@@ -104,4 +109,8 @@ Home.propTypes = {
   getCardItem: PropTypes.func.isRequired,
   QuantityItemCard: PropTypes.number.isRequired,
   card: PropTypes.arrayOf(PropTypes.object).isRequired,
+  increase: PropTypes.func.isRequired,
+  decrease: PropTypes.func.isRequired,
+  del: PropTypes.func.isRequired,
+  alertComponent: PropTypes.bool.isRequired,
 };

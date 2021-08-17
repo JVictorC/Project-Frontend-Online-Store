@@ -5,13 +5,14 @@ import Home from './Components/Home';
 import Cart from './Components/Cart';
 import ProductDetails from './Components/ProductDetails';
 import Checkout from './Components/Checkout';
+import Alert from './Components/AlertComponent';
 
 import './Style/App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { card: [] };
+    this.state = { card: [], alertWarning: false };
     this.getCardItem = this.getCardItem.bind(this);
 
     this.increaseQt = this.increaseQt.bind(this);
@@ -59,14 +60,18 @@ class App extends React.Component {
   }
 
   increaseQt({ target }) {
-    const { card } = this.state;
-    const item = card.find((res) => res.id === target.id);
-    if (item.availableQtd > item.quantity) {
-      item.quantity += 1;
-      this.setState([...card]);
-    }
-    localStorage.setItem('card',
-      JSON.stringify(card));
+    this.setState({ alertWarning: false }, () => {
+      const { card } = this.state;
+      const item = card.find((res) => res.id === target.id);
+      if (item.availableQtd > item.quantity) {
+        item.quantity += 1;
+        this.setState([...card]);
+      } else {
+        this.setState({ alertWarning: true });
+      }
+      localStorage.setItem('card',
+        JSON.stringify(card));
+    });
   }
 
   decreaseQt({ target }) {
@@ -97,7 +102,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { card, productDetailsSelect } = this.state;
+    const { card, productDetailsSelect, alertWarning } = this.state;
     return (
       <BrowserRouter>
         <>
@@ -110,9 +115,14 @@ class App extends React.Component {
                   getCardItem={ this.getCardItem }
                   QuantityItemCard={ this.totalCart(card) }
                   card={ card }
+                  increase={ this.increaseQt }
+                  decrease={ this.decreaseQt }
+                  del={ this.deleteItem }
+                  alertComponent={ alertWarning }
                 />
               ) }
             />
+
             <Route
               path="/cart"
               render={ () => (
@@ -121,6 +131,8 @@ class App extends React.Component {
                   increase={ this.increaseQt }
                   decrease={ this.decreaseQt }
                   del={ this.deleteItem }
+                  sideBar={ false }
+                  alertComponent={ alertWarning }
                 />
               ) }
             />
@@ -138,6 +150,7 @@ class App extends React.Component {
               />
             ) }
           />
+          <Alert />
         </>
       </BrowserRouter>
     );

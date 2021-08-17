@@ -109,12 +109,19 @@ footer nav {
 }
 
 .links {
-  background-color: white;
+  background-color: transparent;
   border: none;
   color: black;
   padding: 0;
   text-decoration: none;
   transition: 0.5s;
+}
+
+@media ( min-width : 600px ) {
+
+  .links {
+    font-size: 15px;
+  }
 }
 
 .links:hover {
